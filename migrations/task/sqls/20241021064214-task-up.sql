@@ -251,13 +251,7 @@ SELECT user_id, COUNT(cb.user_id) FROM "COURSE_BOOKING" cb WHERE join_at NOTNULL
     -- inner join ( 用戶王小明的已使用堂數) as "COURSE_BOOKING"
     -- on "COURSE_BOOKING".user_id = "CREDIT_PURCHASE".user_id;
 
-SELECT cp.user_id ,
-
-(cp.purchased_credits- (SELECT COUNT(cb.user_id) FROM "COURSE_BOOKING" cb WHERE join_at NOTNULL  AND user_id =(SELECT id FROM "USER" WHERE name='王小明') GROUP BY user_id )) AS remain_credit
-
-FROM "CREDIT_PURCHASE" cp JOIN "COURSE_BOOKING" cb  ON cp.user_id = cb.user_id  WHERE cb.user_id =(SELECT id FROM "USER" WHERE name='王小明')
-
-
+SELECT  u.id AS user_id, SUM(cp.purchased_credits) - COUNT(cb.id) AS remaid_credit FROM  "USER" u LEFT JOIN "CREDIT_PURCHASE" cp ON u.id = cp.user_id LEFT JOIN "COURSE_BOOKING" cb ON u.id = cb.user_id AND cb.status != '課程已取消' WHERE u."name" = '王小明' GROUP BY u.id;
 
 -- ████████  █████   █     ███  
 --   █ █   ██    █  █     █     
