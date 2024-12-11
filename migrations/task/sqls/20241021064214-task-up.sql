@@ -73,77 +73,77 @@ INSERT INTO "CREDIT_PURCHASE" (user_id, credit_package_id,purchased_credits,pric
 (SELECT price FROM PackageFor21 ));
 
 
--- -- ████████  █████   █    ████   
--- --   █ █   ██    █  █         ██ 
--- --   █ █████ ███ ███       ███   
--- --   █ █   █    ██  █         ██ 
--- --   █ █   █████ █   █    ████   
--- -- ===================== ====================
--- -- 3. 教練資料 ，資料表為 COACH ,SKILL,COACH_LINK_SKILL
--- -- 3-1 新增：在`COACH`資料表新增三筆教練資料，資料需求如下：
---     -- 1. 將用戶`李燕容`新增為教練，並且年資設定為2年（提示：使用`李燕容`的email ，取得 `李燕容` 的 `id` ）
---     -- 2. 將用戶`肌肉棒子`新增為教練，並且年資設定為2年
---     -- 3. 將用戶`Q太郎`新增為教練，並且年資設定為2年
+-- ████████  █████   █    ████   
+--   █ █   ██    █  █         ██ 
+--   █ █████ ███ ███       ███   
+--   █ █   █    ██  █         ██ 
+--   █ █   █████ █   █    ████   
+-- ===================== ====================
+-- 3. 教練資料 ，資料表為 COACH ,SKILL,COACH_LINK_SKILL
+-- 3-1 新增：在`COACH`資料表新增三筆教練資料，資料需求如下：
+    -- 1. 將用戶`李燕容`新增為教練，並且年資設定為2年（提示：使用`李燕容`的email ，取得 `李燕容` 的 `id` ）
+    -- 2. 將用戶`肌肉棒子`新增為教練，並且年資設定為2年
+    -- 3. 將用戶`Q太郎`新增為教練，並且年資設定為2年
 
--- INSERT INTO "COACH" (user_id, experience_years) VALUES (
--- (SELECT id FROM "USER" WHERE email='lee2000@hexschooltest.io'),
--- 2
--- );
--- INSERT INTO "COACH" (user_id, experience_years) VALUES (
--- (SELECT id FROM "USER" WHERE email='muscle@hexschooltest.io'),
--- 2
--- );
--- INSERT INTO "COACH" (user_id, experience_years) VALUES (
--- (SELECT id FROM "USER" WHERE email='starplatinum@hexschooltest.io'),
--- 2
--- );
+INSERT INTO "COACH" (user_id, experience_years) VALUES (
+(SELECT id FROM "USER" WHERE email='lee2000@hexschooltest.io'),
+2
+);
+INSERT INTO "COACH" (user_id, experience_years) VALUES (
+(SELECT id FROM "USER" WHERE email='muscle@hexschooltest.io'),
+2
+);
+INSERT INTO "COACH" (user_id, experience_years) VALUES (
+(SELECT id FROM "USER" WHERE email='starplatinum@hexschooltest.io'),
+2
+);
 
--- -- 3-2. 新增：承1，為三名教練新增專長資料至 `COACH_LINK_SKILL` ，資料需求如下：
---     -- 1. 所有教練都有 `重訓` 專長
---     -- 2. 教練`肌肉棒子` 需要有 `瑜伽` 專長
---     -- 3. 教練`Q太郎` 需要有 `有氧運動` 與 `復健訓練` 專長
+-- 3-2. 新增：承1，為三名教練新增專長資料至 `COACH_LINK_SKILL` ，資料需求如下：
+    -- 1. 所有教練都有 `重訓` 專長
+    -- 2. 教練`肌肉棒子` 需要有 `瑜伽` 專長
+    -- 3. 教練`Q太郎` 需要有 `有氧運動` 與 `復健訓練` 專長
 
--- WITH WORKOUT AS (
---     SELECT id AS skill_id FROM "SKILL" WHERE name = '重訓'
--- ),
--- COACHS AS (
---     SELECT id AS coach_id FROM "COACH"
--- )
+WITH WORKOUT AS (
+    SELECT id AS skill_id FROM "SKILL" WHERE name = '重訓'
+),
+COACHS AS (
+    SELECT id AS coach_id FROM "COACH"
+)
 
--- INSERT INTO "COACH_LINK_SKILL" (coach_id,skill_id);
--- SELECT COACHS.coach_id, WORKOUT.skill_id FROM COACHS, WORKOUT ;
-
-
--- INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES (
--- (SELECT c.id FROM "USER" u JOIN "COACH" c ON u.id = c.user_id WHERE u.name='肌肉棒子'),
--- (SELECT s.id FROM "SKILL" s WHERE "name"='瑜伽')
--- );
+INSERT INTO "COACH_LINK_SKILL" (coach_id,skill_id);
+SELECT COACHS.coach_id, WORKOUT.skill_id FROM COACHS, WORKOUT ;
 
 
--- INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES (
--- (SELECT c.id FROM "USER" u JOIN "COACH" c ON u.id = c.user_id WHERE u.name='Q太郎'),
--- (SELECT id FROM "SKILL" s WHERE "name" ='瑜伽')
--- );
-
--- INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES (
--- (SELECT c.id FROM "USER" u JOIN "COACH" c ON u.id = c.user_id WHERE u.name='Q太郎'),
--- (SELECT id FROM "SKILL" s WHERE "name" ='復健訓練')
--- );
+INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES (
+(SELECT c.id FROM "USER" u JOIN "COACH" c ON u.id = c.user_id WHERE u.name='肌肉棒子'),
+(SELECT s.id FROM "SKILL" s WHERE "name"='瑜伽')
+);
 
 
--- -- 3-3 修改：更新教練的經驗年數，資料需求如下：
---     -- 1. 教練`肌肉棒子` 的經驗年數為3年
---     -- 2. 教練`Q太郎` 的經驗年數為5年
+INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES (
+(SELECT c.id FROM "USER" u JOIN "COACH" c ON u.id = c.user_id WHERE u.name='Q太郎'),
+(SELECT id FROM "SKILL" s WHERE "name" ='瑜伽')
+);
 
--- UPDATE "COACH" SET experience_years=3 WHERE user_id = (SELECT id FROM "USER" u WHERE name='肌肉棒子');
+INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES (
+(SELECT c.id FROM "USER" u JOIN "COACH" c ON u.id = c.user_id WHERE u.name='Q太郎'),
+(SELECT id FROM "SKILL" s WHERE "name" ='復健訓練')
+);
 
--- UPDATE "COACH" SET experience_years=5 WHERE user_id = (SELECT id FROM "USER" u WHERE name='Q太郎');
 
--- -- 3-4 刪除：新增一個專長 空中瑜伽 至 SKILL 資料表，之後刪除此專長。 
+-- 3-3 修改：更新教練的經驗年數，資料需求如下：
+    -- 1. 教練`肌肉棒子` 的經驗年數為3年
+    -- 2. 教練`Q太郎` 的經驗年數為5年
 
--- INSERT INTO "SKILL" (name) VALUES ('空中瑜伽');
+UPDATE "COACH" SET experience_years=3 WHERE user_id = (SELECT id FROM "USER" u WHERE name='肌肉棒子');
 
--- DELETE FROM "SKILL" WHERE name='空中瑜伽';
+UPDATE "COACH" SET experience_years=5 WHERE user_id = (SELECT id FROM "USER" u WHERE name='Q太郎');
+
+-- 3-4 刪除：新增一個專長 空中瑜伽 至 SKILL 資料表，之後刪除此專長。 
+
+INSERT INTO "SKILL" (name) VALUES ('空中瑜伽');
+
+DELETE FROM "SKILL" WHERE name='空中瑜伽';
 
 -- --  ████████  █████   █    █   █ 
 -- --    █ █   ██    █  █     █   █ 
