@@ -110,14 +110,14 @@ COACHS AS (
     SELECT id AS coach_id FROM "COACH"
 )
 
-INSERT INTO "COACH_LINK_SKILL" (coach_id,skill_id) 
+INSERT INTO "COACH_LINK_SKILL" (coach_id,skill_id);
 SELECT COACHS.coach_id, WORKOUT.skill_id FROM COACHS, WORKOUT ;
 
 
 INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES (
 (SELECT c.id FROM "USER" u JOIN "COACH" c ON u.id = c.user_id WHERE u.name='肌肉棒子'),
 (SELECT s.id FROM "SKILL" s WHERE "name"='瑜伽')
-)
+);
 
 
 INSERT INTO "COACH_LINK_SKILL" (coach_id, skill_id) VALUES (
